@@ -67,12 +67,13 @@ namespace DeffendFromThreats
         //execute the func
         public bool FindRecursive(TreeNode node, int value)
         {
+
             if (root == null)
                 Console.WriteLine("suitable defence was No found. Brace for impact!");
             if (root.MinSeverity + root.MaxSeverity != value)
                 Console.WriteLine("severity Attack is below the threshold.Attack is ignored");
 
-            if (root.MinSeverity + root.MaxSeverity == value)
+            if (node.MinSeverity + node.MaxSeverity == value)
             {
                 Console.WriteLine($"{root.DefensesStrings[0]}");
                 Task.Delay(4000);

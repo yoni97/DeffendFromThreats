@@ -21,7 +21,7 @@ static void Main()
         tree.PreOrder();
     }
 
-    List<ThreatsOfSiber> jsonThreatFile = ReadThreatFromJson<List<ThreatsOfSiber>>(@"..\..\..Threats.json");
+    List<ThreatsOfSiber> jsonThreatFile = ReadThreatFromJson<List<ThreatsOfSiber>>(@"C:\Users\User\Desktop\codcode\c#\consoleApp\SiberThrets\DeffendFromThreats\Threats.json");
 
     static T ReadThreatFromJson<T>(string jsonFile)
     {
