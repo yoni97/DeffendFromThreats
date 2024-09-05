@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace DeffendFromThreats
         }
 
 
-
+        
         public void Insert(TreeNode node)
         {
             TreeNode newNode = new TreeNode(node.MaxSeverity, node.MinSeverity, node.DefensesStrings);
@@ -39,6 +40,7 @@ namespace DeffendFromThreats
             return newNode;
         }
 
+        //print the tree from the root to left
         public void PreOrder()
         {
             PrintPreOrder(root);
@@ -56,17 +58,26 @@ namespace DeffendFromThreats
         } 
 
    
-
+        //find the response to the treat
         public bool Find(int value)
         {
             return FindRecursive(root, value);
         }
 
+        //execute the func
         public bool FindRecursive(TreeNode node, int value)
         {
-            if (root == null) return false;
+            if (root == null)
+                Console.WriteLine("suitable defence was No found. Brace for impact!");
+            if (root.MinSeverity + root.MaxSeverity != value)
+                Console.WriteLine("severity Attack is below the threshold.Attack is ignored");
 
-            if (root.MinSeverity + root.MaxSeverity == value) return true;
+            if (root.MinSeverity + root.MaxSeverity == value)
+            {
+                Console.WriteLine($"{root.DefensesStrings[0]}");
+                Task.Delay(4000);
+                Console.WriteLine($"{root.DefensesStrings[1]}");
+            }
 
             if (value < node.MinSeverity)
                 return FindRecursive(node.Left, value);
@@ -97,109 +108,12 @@ namespace DeffendFromThreats
             return min;
         }
 
-        //public int? GetMax()
-        //{
-        //    return GetMax(root);
-        //}
-
-        //private int? GetMax(TreeNode node)
-        //{
-        //    if (node == null)
-        //        return null;
-        //    int min = node.Value;
-        //    while (node.Right != null)
-        //    {
-        //        min = node.Right.Value;
-        //        node = node.Right;
-        //    }
-        //    return min;
-        //}
 
 
 
 
 
-        //public void Delete(int value)
-        //{
 
-        //    root = DeleteNode(root, value);
-
-
-        //}
-
-        //private TreeNode DeleteNode(TreeNode root, int value)
-        //{
-        //    if (root == null)
-        //        return null;
-
-        //    if (value < root.Value)
-        //    {
-        //        root.Left = DeleteNode(root.Left, value);
-        //    }
-        //    else if (value > root.Value)
-        //    {
-        //        root.Right = DeleteNode(root.Right, value);
-        //    }
-        //    else
-        //    {
-        //        // Node with no children
-        //        if (root.Left == null && root.Right == null)
-        //        {
-        //            return null;
-        //        }
-
-        //        // Node with one child
-        //        if (root.Left == null)
-        //        {
-        //            return root.Right;
-        //        }
-        //        if (root.Right == null)
-        //        {
-        //            return root.Left;
-        //        }
-
-        //        // Node with two children
-        //        TreeNode minNode = GetMinValueNode(root.Right);
-        //        root.Value = minNode.Value;
-        //        root.Right = DeleteNode(root.Right, minNode.Value);
-        //    }
-
-        //    return root;
-        //}
-
-        //private TreeNode GetMinValueNode(TreeNode node)
-        //{
-        //    TreeNode current = node;
-        //    while (current.Left != null)
-        //    {
-        //        current = current.Left;
-        //    }
-        //    return current;
-        //}
-
-        //public TreeNode FindNodeByValue(int value)
-        //{
-        //    return FindNode(root, value);
-        //}
-
-        //private TreeNode FindNode(TreeNode root, int value)
-        //{
-        //    if (root == null)
-        //        return null;
-
-        //    if (value < root.Value)
-        //    {
-        //        return FindNode(root.Left, value);
-        //    }
-        //    else if (value > root.Value)
-        //    {
-        //        return FindNode(root.Right, value);
-        //    }
-        //    else
-        //    {
-        //        return root;
-        //    }
-        //}
         public void InOrder()
         {
             PrintInOrder(root);
@@ -213,10 +127,6 @@ namespace DeffendFromThreats
                 PrintInOrder(node.Right);
             }
         }
-
-
-
-
 
 
     }

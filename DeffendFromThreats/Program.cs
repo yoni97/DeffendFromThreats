@@ -4,6 +4,7 @@ using System.Xml.Linq;
 
 static void Main()
 {
+
     List<TreeNode> jsonFile = ReadFromJson<List<TreeNode>>(@"..\..\..\defenceStrategiesBalanced.json");
 
     static T ReadFromJson<T>(string jsonFile)
