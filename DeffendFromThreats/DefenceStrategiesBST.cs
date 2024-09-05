@@ -8,6 +8,7 @@ namespace DeffendFromThreats
 {
     public class DefenceStrategiesBST
     {
+
          
         public TreeNode root;
 
@@ -52,11 +53,30 @@ namespace DeffendFromThreats
                 PrintPreOrder(node.Left);
                 PrintPreOrder(node.Right);
             }
+        } 
+
+   
+
+        public bool Find(int value)
+        {
+            return FindRecursive(root, value);
+        }
+
+        public bool FindRecursive(TreeNode node, int value)
+        {
+            if (root == null) return false;
+
+            if (root.MinSeverity + root.MaxSeverity == value) return true;
+
+            if (value < node.MinSeverity)
+                return FindRecursive(node.Left, value);
+
+            else
+                return FindRecursive(node.Right, value);
+            //return FindRecursive(value < node.Value? node.Left : node.Right, value);
         }
 
 
-
-        
 
         public int? GetMin()
         {
@@ -76,22 +96,6 @@ namespace DeffendFromThreats
 
             return min;
         }
-
-        //public bool Find(int value)
-        //{
-        //    return FindRecursive(root, value);
-        //}
-
-        //public bool FindRecursive(TreeNode node, int value)
-        //{
-        //    if (root == null) return false;
-        //    if (root.Value == value) return true;
-        //    if (value < node.Value)
-        //        return FindRecursive(node.Left, value);
-        //    else
-        //        return FindRecursive(node.Right, value);
-        //    //return FindRecursive(value < node.Value? node.Left : node.Right, value);
-        //}
 
         //public int? GetMax()
         //{
