@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DeffendFromThreats
 {
@@ -11,84 +12,99 @@ namespace DeffendFromThreats
     {
 
          
-        public TreeNode root;
+        private static TreeNode? root;
 
         public DefenceStrategiesBST()
         {
             root = null;
         }
 
-
-        
         public void Insert(TreeNode node)
         {
-            TreeNode newNode = new TreeNode(node.MaxSeverity, node.MinSeverity, node.DefensesStrings);
-            root = InsertRecursive(root, newNode);
+            root = InsertRecursive(root, node.MaxSeverity, node.MinSeverity, node.DefensesStrings);
         }
 
-        private TreeNode InsertRecursive(TreeNode node, TreeNode newNode)
+        //O(n)
+        private TreeNode InsertRecursive(TreeNode node, int MaxSeverity, int MinSeverity, List<string> Defenses)
         {
             if (node == null)
             {
-                node = new TreeNode(newNode.MinSeverity, newNode.MaxSeverity, newNode.DefensesStrings);
+                node = new TreeNode(MinSeverity, MaxSeverity, Defenses);
                 return node;
             }
-            if (newNode.MinSeverity < node.MinSeverity)
-                node = InsertRecursive(node.Right, newNode);
+            if (MinSeverity > node.MinSeverity)
+                node.Right = InsertRecursive(node.Right, MinSeverity, MaxSeverity, Defenses);
             else
-                node = InsertRecursive(node.Left, newNode);
-            return newNode;
+                node.Left = InsertRecursive(node.Left, MinSeverity, MaxSeverity, Defenses);
+            return node;
         }
 
-        //print the tree from the root to left
         public void PreOrder()
         {
             PrintPreOrder(root);
         }
 
-        public void PrintPreOrder(TreeNode node)
+        //O(n)
+        public async void PrintPreOrder(TreeNode root)
         {
-            if (node != null)
+            if (root != null)
             {
-                Console.Write($" Min = {node.MinSeverity},Max = {node.MaxSeverity} End ");
+                Console.Write($" Min = {root.MinSeverity} ,Max = {root.MaxSeverity} End {root.DefensesStrings[0]}, {root.DefensesStrings[1]}");
                 Console.WriteLine("");
-                PrintPreOrder(node.Left);
-                PrintPreOrder(node.Right);
+                PrintPreOrder(root.Left);
+                PrintPreOrder(root.Right);
             }
         } 
 
    
         //find the response to the treat
-        public bool Find(int value)
+        public void Find(int value)
         {
-            return FindRecursive(root, value);
+            FindRecursive(root, value);
         }
 
-        //execute the func
-        public bool FindRecursive(TreeNode node, int value)
+        //O(n)
+        //find the range of the threat and print the adequate protection
+        public async void FindRecursive(TreeNode node, int value)
         {
-
             if (root == null)
+            {
                 Console.WriteLine("suitable defence was No found. Brace for impact!");
-            if (root.MinSeverity + root.MaxSeverity != value)
-                Console.WriteLine("severity Attack is below the threshold.Attack is ignored");
-
-            if (node.MinSeverity + node.MaxSeverity == value)
+                return;
+            }
+            if (value == node.MinSeverity || value == node.MaxSeverity)
             {
                 Console.WriteLine($"{root.DefensesStrings[0]}");
                 Task.Delay(4000);
                 Console.WriteLine($"{root.DefensesStrings[1]}");
+                return;
             }
-
-            if (value < node.MinSeverity)
-                return FindRecursive(node.Left, value);
-
-            else
-                return FindRecursive(node.Right, value);
-            //return FindRecursive(value < node.Value? node.Left : node.Right, value);
+            else if (value < node.MinSeverity)
+            {
+                if (node.Left != null)
+                {
+                    FindRecursive(node.Left, value);
+                }
+                else if (root.MinSeverity > value)
+                {
+                    Console.WriteLine("severity Attack is below the threshold. Attack is ignored!!");
+                    return;
+                }
+            }
+            
+            else if (value > node.MaxSeverity)
+            {
+                if (node.Right != null)
+                {
+                    FindRecursive(node.Right, value);
+                }
+                else if (root.MaxSeverity < value)
+                {
+                    Console.WriteLine("severity Attack is below the threshold. Attack is ignored!!");
+                    return;
+                }
+            }
         }
-
-
 
         public int? GetMin()
         {
@@ -109,16 +125,12 @@ namespace DeffendFromThreats
             return min;
         }
 
-
-
-
-
-
-
         public void InOrder()
         {
             PrintInOrder(root);
         }
+
+        //O(n)
         public void PrintInOrder(TreeNode node)
         {
             if (node != null)
@@ -130,6 +142,51 @@ namespace DeffendFromThreats
         }
 
 
+        //execute the func
+        //public void FindRecursive(TreeNode node, int value)
+        //{
+        //    if (root == null)
+        //    {
+        //        Console.WriteLine("suitable defence was No found. Brace for impact!");
+        //        return;
+        //    }
+        //    if (value < node.MinSeverity)
+        //    {
+        //        if (node.Right != null && node.Right != null)
+        //        {
+        //        FindRecursive(node.Left, value);
+        //        }
+        //        else if (root.MinSeverity != value && root.MaxSeverity != value)
+        //        {
+        //            Console.WriteLine("severity Attack is below the threshold. Attack is ignored!!");
+        //            return;
+        //        }
+        //    }
+
+        //    else if (value > node.MinSeverity)
+        //    {
+        //        if (node.Right != null && node.Right != null)
+        //        {
+        //            FindRecursive(node.Right, value);
+        //        }
+        //        else if (root.MinSeverity != value && root.MaxSeverity != value)
+        //        {
+        //            Console.WriteLine("severity Attack is below the threshold. Attack is ignored!!");
+        //            return;
+        //        }
+        //    }
+
+        //    else
+        //    {
+        //        Console.WriteLine($"{root.DefensesStrings[0]}");
+        //        Task.Delay(4000);
+        //        Console.WriteLine($"{root.DefensesStrings[1]}");
+        //        return ;
+        //    }
+
+
+        //    //return FindRecursive(value < root.Value? root.Left : root.Right, value);
+        //}
     }
 }
 

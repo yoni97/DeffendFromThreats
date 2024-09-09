@@ -10,6 +10,7 @@ namespace DeffendFromThreats
     public class ThreatsOfSiber
     {
         public int Volume { get; set; }
+
         public int Sophistication { get; set; }
 
         public string ThreatType { get; set; }

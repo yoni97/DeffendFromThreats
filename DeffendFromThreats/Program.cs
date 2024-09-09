@@ -1,35 +1,44 @@
 ﻿using DeffendFromThreats;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Xml.Linq;
 
+
+
 static void Main()
 {
-
+    //path of the json file
     List<TreeNode> jsonFile = ReadFromJson<List<TreeNode>>(@"..\..\..\defenceStrategiesBalanced.json");
 
-    static T ReadFromJson<T>(string jsonFile)
+    //read and convert the json file
+    static TreeNode ReadFromJson<TreeNode>(string jsonFile)
     {
         string jsonString = File.ReadAllText(jsonFile);
-        return JsonSerializer.Deserialize<T>(jsonString);
+        return JsonSerializer.Deserialize<TreeNode>(jsonString);
     }
 
+    
+    //inserting objects to the tree
+    //O(n**2)
     DefenceStrategiesBST tree = new();
     foreach (TreeNode item in jsonFile)
     {
         tree.Insert(item);
-
-        tree.PreOrder();
     }
+    tree.PreOrder();
 
+    //path of the threats json file
     List<ThreatsOfSiber> jsonThreatFile = ReadThreatFromJson<List<ThreatsOfSiber>>(@"C:\Users\User\Desktop\codcode\c#\consoleApp\SiberThrets\DeffendFromThreats\Threats.json");
 
+    //read and convert the json file
     static T ReadThreatFromJson<T>(string jsonFile)
     {
         string jsonthreatString = File.ReadAllText(jsonFile);
         return JsonSerializer.Deserialize<T>(jsonthreatString);
     }
 
-    DefenceStrategiesBST trt = new();
+    //calculate the threat number and sending it to check the type if defence
+    //O(n)
     foreach (ThreatsOfSiber item in jsonThreatFile)
     {
         string result = item.Target.ToString();
@@ -49,7 +58,7 @@ static void Main()
                 break;
         }
         int severity = (item.Volume * item.Sophistication) + int.Parse(result);
-        trt.Find(severity);
+        tree.Find(severity);
     }
 }
 Main();
