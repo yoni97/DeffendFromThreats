@@ -28,7 +28,7 @@ static void Main()
     tree.PreOrder();
 
     //path of the threats json file
-    List<ThreatsOfSiber> jsonThreatFile = ReadThreatFromJson<List<ThreatsOfSiber>>(@"C:\Users\User\Desktop\codcode\c#\consoleApp\SiberThrets\DeffendFromThreats\Threats.json");
+    List<ThreatsOfSiber> jsonThreatFile = ReadThreatFromJson<List<ThreatsOfSiber>>(@"..\..\..\..\Threats.json");
 
     //read and convert the json file
     static T ReadThreatFromJson<T>(string jsonFile)

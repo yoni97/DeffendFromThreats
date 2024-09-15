@@ -55,7 +55,6 @@ namespace DeffendFromThreats
                 PrintPreOrder(root.Right);
             }
         } 
-
    
         //find the response to the treat
         public void Find(int value)
@@ -140,53 +139,6 @@ namespace DeffendFromThreats
                 PrintInOrder(node.Right);
             }
         }
-
-
-        //execute the func
-        //public void FindRecursive(TreeNode node, int value)
-        //{
-        //    if (root == null)
-        //    {
-        //        Console.WriteLine("suitable defence was No found. Brace for impact!");
-        //        return;
-        //    }
-        //    if (value < node.MinSeverity)
-        //    {
-        //        if (node.Right != null && node.Right != null)
-        //        {
-        //        FindRecursive(node.Left, value);
-        //        }
-        //        else if (root.MinSeverity != value && root.MaxSeverity != value)
-        //        {
-        //            Console.WriteLine("severity Attack is below the threshold. Attack is ignored!!");
-        //            return;
-        //        }
-        //    }
-
-        //    else if (value > node.MinSeverity)
-        //    {
-        //        if (node.Right != null && node.Right != null)
-        //        {
-        //            FindRecursive(node.Right, value);
-        //        }
-        //        else if (root.MinSeverity != value && root.MaxSeverity != value)
-        //        {
-        //            Console.WriteLine("severity Attack is below the threshold. Attack is ignored!!");
-        //            return;
-        //        }
-        //    }
-
-        //    else
-        //    {
-        //        Console.WriteLine($"{root.DefensesStrings[0]}");
-        //        Task.Delay(4000);
-        //        Console.WriteLine($"{root.DefensesStrings[1]}");
-        //        return ;
-        //    }
-
-
-        //    //return FindRecursive(value < root.Value? root.Left : root.Right, value);
-        //}
     }
 }
 
